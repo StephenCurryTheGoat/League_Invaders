@@ -20,6 +20,7 @@ static final int HEIGHT = 800;
 		frame.setSize(WIDTH, HEIGHT);
 	frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addKeyListener(panel);
 		
 	}
 	
