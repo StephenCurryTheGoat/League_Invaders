@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
+	Timer alienSpawn;
 
 	GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -54,7 +55,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		manager.draw(getGraphics());
+		manager.update();
 
 	}
 
@@ -114,7 +115,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == END) {
 			updateEndState();
 		}
-		System.out.println("action");
+		
 		repaint();
 	}
 
@@ -127,36 +128,46 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			} else {
 				currentState++;
 			}
+			if(currentState == GAME) {
+				startGame();
+			}
+			if(currentState == END){
+				alienSpawn.stop();
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			System.out.println("UP");
+			//System.out.println("UP");
 			ship.up();
 			if (ship.y < 0) {
 				ship.y = 0;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			System.out.println("DOWN");
+			//System.out.println("DOWN");
 			ship.down();
 			if (ship.y > LeagueInvaders.HEIGHT - ship.height) {
 				ship.y = LeagueInvaders.HEIGHT - ship.height;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			System.out.println("RIGHT");
+			//System.out.println("RIGHT");
 			ship.right();
 			if (ship.x > LeagueInvaders.WIDTH - ship.width) {
 				ship.x = LeagueInvaders.WIDTH - ship.width;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			System.out.println("LEFT");
+			//System.out.println("LEFT");
 			ship.left();
 			if (ship.x < 0) {
 				ship.x = 0;
 			}
 		}
-	}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			//System.out.println("Space");
+			manager.addProjectile(ship.getProjectile());
+		}
+			}
 
 	void loadImage(String imageFile) {
 		if (needImage) {
@@ -168,6 +179,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 			needImage = false;
 		}
+	}
+	void startGame() {
+		 alienSpawn = new Timer(1000 , manager);
+		    alienSpawn.start();
 	}
 
 	@Override

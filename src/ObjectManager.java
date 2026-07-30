@@ -1,11 +1,13 @@
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class ObjectManager {
+public class ObjectManager implements ActionListener {
 	RocketShip r;
-	ArrayList<Projectile> projectile = new ArrayList<Projectile>();
+	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random ran = new Random();
 
@@ -13,8 +15,8 @@ public class ObjectManager {
 		this.r = r;
 	}
 
-	void addProjectiles(ArrayList p) {
-
+	void addProjectile(Projectile p) {
+		projectiles.add(p);
 	}
 
 	void addAlien() {
@@ -30,8 +32,8 @@ public class ObjectManager {
 				al.isActive = false;
 			}
 		}
-		for (int i = 0; i < projectile.size(); i++) {
-			Projectile pr = projectile.get(i);
+		for (int i = 0; i < projectiles.size(); i++) {
+			Projectile pr = projectiles.get(i);
 			pr.update();
 			if (pr.y < -pr.height) {
 				pr.isActive = false;
@@ -45,8 +47,8 @@ public class ObjectManager {
 			Alien al = aliens.get(i);
 			al.draw(g);
 		}
-		for (int i = 0; i < projectile.size(); i++) {
-			Projectile pr = projectile.get(i);
+		for (int i = 0; i < projectiles.size(); i++) {
+			Projectile pr = projectiles.get(i);
 			pr.draw(g);
 		}
 	}
@@ -59,12 +61,18 @@ public class ObjectManager {
 				iter.remove();
 			}
 		}
-		Iterator<Projectile> iters = projectile.iterator();
-		while(iters.hasNext()) {
+		Iterator<Projectile> iters = projectiles.iterator();
+		while (iters.hasNext()) {
 			Projectile p = iters.next();
-			if(p.isActive == false) {
+			if (p.isActive == false) {
 				iters.remove();
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		addAlien();
 	}
 }
