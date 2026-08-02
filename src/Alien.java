@@ -14,10 +14,12 @@ public class Alien extends GameObject {
 		speed = 1;
 		if (needImage) {
 		    loadImage ("alien.png");
+		   
 		}
 
 	}
 	void update() {
+		super.update();
 		y+=speed;
 	}
 	void draw(Graphics g) {

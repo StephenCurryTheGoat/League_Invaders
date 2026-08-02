@@ -10,6 +10,7 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random ran = new Random();
+	int score = 0;
 
 	ObjectManager(RocketShip r) {
 		this.r = r;
@@ -39,6 +40,8 @@ public class ObjectManager implements ActionListener {
 				pr.isActive = false;
 			}
 		}
+		checkCollision();
+		purgeObjects();
 	}
 
 	void draw(Graphics g) {
@@ -75,4 +78,24 @@ public class ObjectManager implements ActionListener {
 		// TODO Auto-generated method stub
 		addAlien();
 	}
+	
+	void checkCollision() {
+		for(Alien alien: aliens) {
+			for(Projectile r : projectiles) {
+				if(r.collisionBox.intersects(alien.collisionBox)) {
+					alien.isActive = false;
+					r.isActive = false;
+					score++;
+				}
+			}
+		}
+		
+	
+	}
+	void getScore() {
+		
+	}
 }
+		
+	
+

@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		manager.update();
+		
 
 	}
 
@@ -88,7 +89,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.drawString("ship", LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		manager.draw(g);
-
+if(ship.isActive = false) {
+	currentState = END;
+}
+manager.draw(manager.getScore());
 	}
 
 	void drawEndState(Graphics g) {
@@ -166,6 +170,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 			//System.out.println("Space");
 			manager.addProjectile(ship.getProjectile());
+		}
+		if(currentState == END) {
+			r = new RocketShip()
 		}
 			}
 
